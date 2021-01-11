@@ -1,0 +1,126 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <style>
+ body, html {
+  height: 100%;
+  background: #222;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.status, .percentage {
+  color: #777;
+  margin-top: 2vw;
+  font-family: Helvetica;
+}
+
+.battery {
+  width: 60vw;
+  border: 1vw solid #fff;
+  height: 50vh;
+  border-radius: 2vw;
+  padding: 0.5vw;
+  position: relative;
+}
+.battery:before {
+  content: "";
+  width: 2vw;
+  height: 10vw;
+  background: white;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-5vw);
+  right: -3.5vw;
+  border-radius: 1vw;
+}
+.battery .charge {
+  height: 100%;
+  background: white;
+  border-radius: 0.8vw;
+}
+.battery .charge.charged {
+  background: green;
+}
+.battery .charge.charging {
+  background: orange;
+}
+.battery .charge.danger {
+  background: red;
+}
+  </style>
+
+</head>
+
+<body>
+ <div class="container">
+  <div class="battery">
+    <div class="charge"></div>
+  </div>
+  <p><span class="percentage"></span>  <span class="status"></span></p>
+</div>
+
+<script>
+function humanTime(seconds) {
+  var minutes = Math.floor(seconds / 60);
+  var h = Math.floor(minutes / 60);
+  var m = minutes % 60;
+  
+  return h + ':' + (m < 9 ? '0' + String(m) : m);
+}
+
+function updateUI(battery) {
+  var el = document.querySelector('.charge');
+  var status = document.querySelector('.status');
+  
+  var classes = ['charge'];
+  document.querySelector('.percentage').innerHTML = battery.level
+  el.style.width = (battery.level * 100) + '%';  
+  
+  if (battery.level === 1) {
+    classes.push('charged');
+    status.innerText = 'Fully charged';
+  } else if (battery.charging) {
+    classes.push('charging');
+    status.innerText = battery.chargingTime === Infinity ? 
+      'Calculating...' : humanTime(battery.chargingTime) + ' until charged';
+  } else {
+    if (battery.level < .2) {
+      classes.push('danger');
+    }
+    
+    status.innerText = battery.dischargingTime === Infinity ? 
+      'Calculating...' : humanTime(battery.dischargingTime) + ' remaining';
+  }
+  
+  el.className = classes.join(' ');
+}
+
+navigator.getBattery().then(function(battery) {
+  var handler = function() {
+    updateUI(battery);
+  };
+  
+  handler();
+  
+  battery.addEventListener('chargingchange', handler);
+  battery.addEventListener('levelchange', handler);
+  battery.addEventListener('chargingtimechange', handler);
+  battery.addEventListener('dischargingtimechange', handler);
+});
+</script>
+</body>
+</html>
