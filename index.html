@@ -87,7 +87,7 @@ function updateUI(battery) {
   var status = document.querySelector('.status');
   
   var classes = ['charge'];
-  document.querySelector('.percentage').innerHTML = battery.level
+  document.querySelector('.percentage').innerHTML = 'Battery Level '+battery.level*100
   el.style.width = (battery.level * 100) + '%';  
   
   if (battery.level === 1) {
@@ -103,7 +103,7 @@ function updateUI(battery) {
     }
     
     status.innerText = battery.dischargingTime === Infinity ? 
-      'Calculating...' : humanTime(battery.dischargingTime) + ' remaining';
+      'Calculating...' : 'Time left for switch off: '+humanTime(battery.dischargingTime) + ' remaining';
   }
   
   el.className = classes.join(' ');
