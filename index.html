@@ -29,9 +29,9 @@
 }
 
 .battery {
-/*   width: 60vw; */
+  width: 60vw;
   border: 1vw solid #fff;
-/*   height: 50vh; */
+  height: 50vh;
   border-radius: 2vw;
   padding: 0.5vw;
   position: relative;
@@ -61,20 +61,9 @@
 .battery .charge.danger {
   background: red;
 }
-  @media only screen and (max-width: 600px) {
-
-    .battery {
-    width: 80vw;
+    .mob{
     height: 20vh;
-}
- 
-    }
-    
-       @media only screen and (min-width: 600px){
-    .battery {
-  width: 60vw;
-  height: 50vh;
-}
+      width: 80vw
     }
   </style>
 
@@ -90,6 +79,10 @@
 </div>
 
 <script>
+  if (screen.width < 720){
+     document.querySelector('.battery').style.height = '20vh';
+    document.querySelector('.battery').style.height = '80vh';
+  }
 function humanTime(seconds) {
   var minutes = Math.floor(seconds / 60);
   var h = Math.floor(minutes / 60);
