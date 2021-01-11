@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+  <title>Javascript Battery Checker</title>
+  <meta name="description" content="Javascript Battery Checker">
+  <meta name="author" content="Karan Goyal">
 
   <style>
  body, html {
@@ -61,9 +61,8 @@
 .battery .charge.danger {
   background: red;
 }
-    .mob{
-    height: 20vh;
-      width: 80vw
+    .status{
+      
     }
   </style>
 
@@ -105,14 +104,14 @@ function updateUI(battery) {
   } else if (battery.charging) {
     classes.push('charging');
     status.innerText = battery.chargingTime === Infinity ? 
-      'Charging...' : humanTime(battery.chargingTime) + ' until charged';
+      'Charging...' : battery.chargingTime + ' until charged';
   } else {
     if (battery.level < .2) {
       classes.push('danger');
     }
     
     status.innerText = battery.dischargingTime === Infinity ? 
-      'Calculating...' : 'Time left for switch off: '+humanTime(battery.dischargingTime) + ' remaining';
+      'Calculating...' : battery.dischargingTime;
   }
   
   el.className = classes.join(' ');
