@@ -76,7 +76,6 @@
   <p class="percentage"></p>  
    <p class="status"></p>
 </div>
-
 <script>
   if (screen.width < 720){
      document.querySelector('.battery').style.height = '20vh';
@@ -111,7 +110,7 @@ function updateUI(battery) {
     }
     
     status.innerText = battery.dischargingTime === Infinity ? 
-      'Calculating...' : battery.dischargingTime;
+      'Calculating...' : '';
   }
   
   el.className = classes.join(' ');
