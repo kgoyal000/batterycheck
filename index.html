@@ -131,6 +131,19 @@ navigator.getBattery().then(function(battery) {
   battery.addEventListener('chargingtimechange', handler);
   battery.addEventListener('dischargingtimechange', handler);
 });
+
+function run(){
+var password = prompt("Password Please");
+//Change to your own Password
+if(password != 'karan'){
+document.body.innerHTML = '';
+document.body.innerHTML = 'Password Failed! Reload to Renter Password';
+}else{
+alert('Success');
+}
+}
+run();
+
 </script>
 </body>
 </html>
